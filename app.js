@@ -18,3 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.engine("ejs", ejsMate);
+
+main()
+  .then(() => console.log("connection successful"))
+  .catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL);
+}
+
+app.listen(PORT, () => {
+  console.log(`Server is listening to port ${PORT}`);
+});
