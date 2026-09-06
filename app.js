@@ -27,6 +27,20 @@ async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
 
+//Root Route
+app.get("/", (req, res) => {
+  res.send("hi, I am root");
+});
+
+//Index Route
+app.get(
+  "/listings",
+  wrapAsync(async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("listings/index.ejs", { allListings });
+  }),
+);
+
 app.listen(PORT, () => {
   console.log(`Server is listening to port ${PORT}`);
 });
