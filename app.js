@@ -70,6 +70,27 @@ app.post(
   }),
 );
 
+//Edit Route
+app.get(
+  "/listings/:id/edit",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", { listing });
+  }),
+);
+
+//Update Route
+app.put(
+  "/listing/:id",
+  validateListing,
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    res.redirect(`/listings/${id}`);
+  }),
+);
+
 app.listen(PORT, () => {
   console.log(`Server is listening to port ${PORT}`);
 });
