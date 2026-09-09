@@ -32,6 +32,17 @@ app.get("/", (req, res) => {
   res.send("hi, I am root");
 });
 
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
 //Index Route
 app.get(
   "/listings",
@@ -90,6 +101,27 @@ app.put(
     res.redirect(`/listings/${id}`);
   }),
 );
+
+//Delete Route
+app.delete(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+
+    console.log(deletedListing);
+    res.redirect("/listings");
+  }),
+);
+
+app.all("*path", (req, res, next) => {
+  next(new ExpressError(404, "Page Not Found!"));
+});
+
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).render("error.ejs", { message });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening to port ${PORT}`);
