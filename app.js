@@ -41,6 +41,11 @@ app.get(
   }),
 );
 
+//New Route
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new.ejs");
+});
+
 //Show Route
 app.get(
   "/listings/:id",
@@ -48,6 +53,20 @@ app.get(
     let { id } = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/show.ejs", { listing });
+  }),
+);
+
+//Create Route
+app.post(
+  "/listings",
+  validateListing,
+  wrapAsync(async (req, res, next) => {
+    // let { title, description, image, price, country, location } = req.body;
+    const newListing = new Listing(req.body.listing); //better syntex
+
+    await newListing.save();
+    console.log("Listing was saved");
+    res.redirect("/listings"); //run after save succeeds
   }),
 );
 
