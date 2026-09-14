@@ -7,6 +7,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
 PORT = process.env.PORT || 8080;
 
 const listings = require("./routes/listing.js");
@@ -26,6 +27,14 @@ main()
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
+
+const sessionConfig = {
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+};
+
+app.use(session(sessionConfig));
 
 //Root Route
 app.get("/", (req, res) => {
