@@ -32,6 +32,11 @@ const sessionConfig = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //1 week
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true, // Secure HTTP only, prevent cross-site scripting attacks
+  },
 };
 
 app.use(session(sessionConfig));
