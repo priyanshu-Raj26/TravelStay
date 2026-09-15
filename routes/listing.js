@@ -50,7 +50,7 @@ router.post(
     const newListing = new Listing(req.body.listing); //better syntex
 
     await newListing.save();
-    console.log("Listing was saved");
+    req.flash("success", "New listing created!");
     res.redirect("/listings"); //run after save succeeds
   }),
 );
@@ -74,6 +74,7 @@ router.put(
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
   }),
 );
@@ -86,6 +87,7 @@ router.delete(
     let deletedListing = await Listing.findByIdAndDelete(id);
 
     console.log(deletedListing);
+    req.flash("success", "Listing deleted successfully!");
     res.redirect("/listings");
   }),
 );
