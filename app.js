@@ -14,8 +14,9 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 PORT = process.env.PORT || 8080;
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -64,18 +65,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/fakeUser", async (req, res) => {
-  const fakeUser = new User({
-    email: "student@gmali.com",
-    username: "student", // username is required by passport-local-mongoose plugin
-  });
+// app.get("/fakeUser", async (req, res) => {
+//   const fakeUser = new User({
+//     email: "student@gmali.com",
+//     username: "student", // username is required by passport-local-mongoose plugin
+//   });
 
-  const registeredUser = await User.register(fakeUser, "mypassword"); //register method is provided by passport-local-mongoose plugin, it hashes the password and saves the user to the database
-  res.send(registeredUser);
-});
+//   const registeredUser = await User.register(fakeUser, "mypassword"); //register method is provided by passport-local-mongoose plugin, it hashes the password and saves the user to the database
+//   res.send(registeredUser);
+// });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/users", userRouter);
 
 app.all("*path", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
