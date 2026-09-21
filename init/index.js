@@ -2,6 +2,7 @@ require("dotenv").config({ path: "../.env" }); //must be first line
 
 const mongoose = require("mongoose");
 const initData = require("./data.js");
+const Review = require("../models/review.js");
 const Listing = require("../models/listing.js");
 
 main()
@@ -14,6 +15,7 @@ async function main() {
 
 const initDB = async () => {
   await Listing.deleteMany({});
+  await Review.deleteMany({});
   initData.data = initData.data.map((obj) => ({
     ...obj,
     owner: "6aab8bff5b66aeb4126e7fa0",
