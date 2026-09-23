@@ -120,3 +120,164 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+
+.section-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+#comment {
+  resize: vertical;
+}
+
+.review-submit {
+  background-color: #fa4a5f !important;
+  border: 1px solid #fa4a5f !important;
+  color: #fff !important;
+  padding: 0.65rem 1.5rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.review-submit:hover {
+  background-color: #d93e50 !important;
+  border-color: #d93e50 !important;
+}
+
+.review-section {
+  margin-bottom: 1rem;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.review-card {
+  position: relative;
+  height: 100%;
+  margin: 0;
+}
+
+.review-card .card-body {
+  padding: 1.5rem !important;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.review-card .card-title {
+  margin-bottom: 0.25rem;
+}
+
+.review-timestamp {
+  color: #6c757d;
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+
+.review-rating {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.review-card .card-text {
+  margin-bottom: 0;
+}
+
+.review-delete {
+  white-space: nowrap;
+}
+
+.confirm-delete-btn {
+  min-width: 5.5rem;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.confirm-delete-btn-pending,
+.confirm-delete-btn-pending:hover,
+.confirm-delete-btn-pending:focus {
+  background-color: #fe424d !important;
+  border-color: #fe424d !important;
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 767px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* map */
+#map {
+  height: 400px;
+  width: 80vh;
+}
+
+/* search */
+.search-btn {
+  background-color: #fe424d;
+  color: #fff;
+  padding: 0 1rem 0 1rem;
+  border-radius: 2.5rem;
+}
+.search-btn:hover {
+  background-color: #fe424d;
+  color: #fff;
+}
+.search-btn i {
+  margin-right: 0.5rem;
+  display: inline;
+}
+.search-input {
+  border-radius: 2.5rem;
+  padding: 0.5rem 3rem 0.5rem 3rem;
+  font-size: 1rem;
+  width: 20rem;
+}
+
+/* Tax */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter {
+  text-align: center;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.filter p {
+  font-size: 0.8rem;
+}
+.tax-info {
+  display: none;
+}
+.tax-toggle {
+  margin-left: auto;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  height: 3.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
