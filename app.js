@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -26,9 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.engine("ejs", ejsMate);
+app.use(morgan("dev"));
 
 main()
-  .then(() => console.log("connection successful"))
+  .then(() => console.log("MongoDB connected:", mongoose.connection.host))
   .catch((err) => console.log(err));
 
 async function main() {
@@ -46,9 +48,9 @@ const sessionConfig = {
   },
 };
 
-//Root Route
+// Root Route
 app.get("/", (req, res) => {
-  res.send("hi, I am root");
+  res.redirect("/listings");
 });
 
 app.use(session(sessionConfig));
