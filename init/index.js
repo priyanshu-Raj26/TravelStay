@@ -29,13 +29,14 @@ const initDB = async () => {
 
       return {
         ...obj,
-        owner: "6aab8bff5b66aeb4126e7fa0",
+        owner: "6abd2a21445bcb5f98da9af3",
         geometry: response.body.features[0]?.geometry,
       };
     }),
   );
   await Listing.insertMany(listings);
   console.log("data was initialized");
+  await mongoose.connection.close();
 };
 
 initDB();
