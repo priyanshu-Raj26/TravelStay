@@ -11,6 +11,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -37,7 +38,17 @@ async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
 
+const store = new MongoStore({
+  mongoUrl: process.env.MONGO_URL,
+  touchAfter: 24 * 60 * 60, // time period in seconds
+});
+
+store.on("error", (err) => {
+  console.log("ERROR IN MONGO SESSION STORE", err);
+});
+
 const sessionConfig = {
+  store: store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
